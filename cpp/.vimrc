@@ -234,9 +234,9 @@ let g:syntastic_cpp_compiler = 'g++'
 let g:syntastic_cpp_compiler_options = '-std=c++11 -stdlib=libc++'
 
 " 一键编译
-nmap <Leader>m :!rm -rf main<CR>:wa<CR>:make<CR><CR>:cw<CR>
+nmap <Leader>m :!rm -rf main<CR>:wa<CR>:make \| bot copen<CR><CR>:cw<CR>
 " 一键编译运行
-nmap <Leader>g :!rm -rf main<CR>:wa<CR>:make<CR>:cw<CR><CR>:!./main<CR>
+nmap <Leader>g :!rm -rf main<CR>:wa<CR>:make \| bot copen<CR>:cw<CR><CR>:!./main<CR>
 
 " 将外部命令 wmctrl 控制窗口最大化的命令行参数封装成一个 vim 的函数
 fun! ToggleFullscreen()
