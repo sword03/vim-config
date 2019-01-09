@@ -31,6 +31,15 @@ Plugin 'sjl/gundo.vim'
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'suan/vim-instant-markdown'
 Plugin 'lilydjwg/fcitx.vim'
+Plugin 'vim-syntastic/syntastic'
+Plugin 'vnvie/vim-flake8'
+Plugin 'mindriot101/vim-yapf'
+Plugin 'airblade/vim-gitgutter'
+
+
+"let g:gitgutter_async=0
+"let g:gitgutter_eager = 0
+"let g:gitgutter_realtime = 0
 
 " 快捷键
 " 定义快捷键的前缀，即<Leader>
@@ -213,11 +222,12 @@ highlight PmenuSel ctermfg=2 ctermbg=3 guifg=#AFD700 guibg=#106900
 let g:ycm_complete_in_comments=1
 " 允许 vim 加载 .ycm_extra_conf.py 文件，不再提示
 let g:ycm_confirm_extra_conf=0
-let g:ycm_global_ycm_extra_conf = '/home/max/.vim/bundle/YouCompleteMe/.ycm_extra_conf.py'
+autocmd FileType c,cpp let g:ycm_global_ycm_extra_conf = '/home/max/.vim/ycm_extra_conf/c_cpp/.ycm_extra_conf.py'
+autocmd FileType python let g:ycm_global_ycm_extra_conf = '/home/max/.vim/ycm_extra_conf/python/.ycm_extra_conf.py'
 " 开启 YCM 标签补全引擎
 let g:ycm_collect_identifiers_from_tags_files=1
 " 引入 C++ 标准库tags
-set tags+=/usr/include/c++/5.4.0/.stdcpp.tags
+autocmd FileType c,cpp set tags+=/usr/include/c++/5.4.0/.stdcpp.tags
 " YCM 集成 OmniCppComplete 补全引擎，设置其快捷键
 inoremap <leader>; <C-x><C-o>
 " 补全内容不以分割子窗口形式出现，只显示补全列表
@@ -233,10 +243,36 @@ let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
 let g:syntastic_cpp_compiler = 'g++'
 let g:syntastic_cpp_compiler_options = '-std=c++11 -stdlib=libc++'
 
+" python 语法检测工具
+"let g:syntastic_python_checkers = ['pylint']
+let g:syntastic_python_checkers = ['flake8']
+let g:syntastic_python_flake8_args='--ignore=E402,E741,E501'
+
+let g:gitgutter_async=0
+set updatetime=100
+
+" python 格式重排
+"let g:yapf_style = "google"
+let g:yapf_style = "pep8"
+autocmd FileType python :nnoremap <leader>y :call Yapf()<cr>
+
+"set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+
 " 一键编译
-nmap <Leader>m :!rm -rf main<CR>:wa<CR>:make \| bot copen<CR><CR>:cw<CR>
+autocmd FileType c,cpp nmap <Leader>m :!rm -rf main<CR>:wa<CR>:make \| bot copen<CR><CR>:cw<CR>
 " 一键编译运行
-nmap <Leader>g :!rm -rf main<CR>:wa<CR>:make \| bot copen<CR>:cw<CR><CR>:!./main<CR>
+autocmd FileType c,cpp nmap <Leader>g :!rm -rf main<CR>:wa<CR>:make \| bot copen<CR>:cw<CR><CR>:!./main<CR>
+
+" 一键编译运行
+autocmd FileType python nmap <Leader>g :!python ./main.py<CR>
 
 " 将外部命令 wmctrl 控制窗口最大化的命令行参数封装成一个 vim 的函数
 fun! ToggleFullscreen()
