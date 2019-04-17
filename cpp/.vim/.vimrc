@@ -240,8 +240,6 @@ let NERDTreeShowHidden=1
 let NERDTreeMinimalUI=1
 " 删除文件时自动删除文件对应 buffer
 let NERDTreeAutoDeleteBuffer=1
-" 隐藏特定文件
-let NERDTreeIgnore=['.git','.idea','.swp']
 
 " UltiSnips 的 tab 键与 YCM 冲突，重新设定
 let g:UltiSnipsExpandTrigger="<leader><tab>"
@@ -290,7 +288,7 @@ let g:syntastic_cpp_compiler_options = '-std=c++11 -stdlib=libc++'
 " python 语法检测工具
 "let g:syntastic_python_checkers = ['pylint']
 let g:syntastic_python_checkers = ['flake8']
-let g:syntastic_python_flake8_args='--ignore=E402,E741,E501,W504'
+let g:syntastic_python_flake8_args='--ignore=E402,E741,E501'
 
 let g:gitgutter_async=0
 set updatetime=100
