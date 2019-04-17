@@ -1,5 +1,7 @@
 " vundle 环境设置
 filetype off
+" au BufNewFile,BufRead *.py set filetype=python
+
 set rtp+=~/.vim/bundle/Vundle.vim
 " vundle 管理的插件列表必须位于 vundle#begin() 和 vundle#end() 之间
 call vundle#begin()
@@ -35,7 +37,9 @@ Plugin 'vim-syntastic/syntastic'
 Plugin 'vnvie/vim-flake8'
 Plugin 'mindriot101/vim-yapf'
 Plugin 'airblade/vim-gitgutter'
+Plugin 'godlygeek/tabular'
 
+filetype plugin indent on 
 
 "let g:gitgutter_async=0
 "let g:gitgutter_eager = 0
@@ -71,6 +75,35 @@ nnoremap <Leader>kw <C-W>k
 nnoremap <Leader>jw <C-W>j
 " 定义快捷键在结对符之间跳转
 nmap <Leader>M %
+" 代码大纲
+nmap <F8> :TagbarToggle<CR>
+
+" minibufexplorer 跳转
+" 跳转至下方的子窗口
+nmap <Leader>bn :bn<CR>
+nmap <Leader>bp :bp<CR>
+nmap <Leader>b1 :b1<CR>
+nmap <Leader>b2 :b2<CR>
+nmap <Leader>b3 :b3<CR>
+nmap <Leader>b4 :b4<CR>
+nmap <Leader>b5 :b5<CR>
+nmap <Leader>b6 :b6<CR>
+nmap <Leader>b7 :b7<CR>
+nmap <Leader>b8 :b8<CR>
+nmap <Leader>b9 :b9<CR>
+
+
+" Tab页切换
+:nn <M-1> 1gt
+:nn <M-2> 2gt
+:nn <M-3> 3gt
+:nn <M-4> 4gt
+:nn <M-5> 5gt
+:nn <M-6> 6gt
+:nn <M-7> 7gt
+:nn <M-8> 8gt
+:nn <M-9> 9gt
+:nn <M-0> :tablast<CR>
 
 " 开启实时搜索功能
 set incsearch
@@ -82,6 +115,8 @@ set nocompatible
 set wildmenu
 
 " 配色方案
+let g:solarized_termcolors=256
+syntax enable
 set background=dark
 colorscheme solarized
 "colorscheme molokai
@@ -109,17 +144,18 @@ let g:Powerline_colorscheme='solarized256'
 " 开启语法高亮功能
 syntax enable
 " 允许用指定语法高亮配色方案替换默认方案
-syntax on
+" syntax on
 
 
 syntax keyword cppSTLtype initializer_list
 
 " 插件列表结束
 call vundle#end()
-filetype plugin indent on
+
+" filetype plugin indent on
 
 " 自适应不同语言的智能缩进
-filetype indent on
+" filetype indent on
 " 将制表符扩展为空格
 set expandtab
 " 设置编辑时制表符占用空格数
@@ -227,7 +263,13 @@ autocmd FileType python let g:ycm_global_ycm_extra_conf = '/home/max/.vim/ycm_ex
 " 开启 YCM 标签补全引擎
 let g:ycm_collect_identifiers_from_tags_files=1
 " 引入 C++ 标准库tags
-autocmd FileType c,cpp set tags+=/usr/include/c++/5.4.0/.stdcpp.tags
+" autocmd FileType c,cpp set tags+=/usr/include/c++/5.4.0/.stdcpp.tags
+" autocmd FileType python set tags=./.tags,.tags;$home
+" set tags=./.tags,.tags;$home
+" autocmd FileType python set tags=$HOME/python/renren-ln-hub/.tags
+" set tags=$HOME/python/renren-ln-hub/.tags
+
+
 " YCM 集成 OmniCppComplete 补全引擎，设置其快捷键
 inoremap <leader>; <C-x><C-o>
 " 补全内容不以分割子窗口形式出现，只显示补全列表
@@ -255,6 +297,7 @@ set updatetime=100
 "let g:yapf_style = "google"
 let g:yapf_style = "pep8"
 autocmd FileType python :nnoremap <leader>y :call Yapf()<cr>
+set tags=./.tags,.tags;$home
 
 "set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
